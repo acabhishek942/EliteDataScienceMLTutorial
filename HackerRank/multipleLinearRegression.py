@@ -41,7 +41,4 @@ trainData, trainLabels, testData = parseInput()
 
 thetaMatrix = changeToMatrix(trainData, trainLabels, testData)
 for j in testData:
-    prediction  = 0
-    for i, k  in zip(j, thetaMatrix):
-        prediction += i * k
-    print ("%2.f" % prediction)
+    print (np.matmul(np.transpose(thetaMatrix), np.array(j)))
