@@ -1,4 +1,5 @@
 # My solution for https://www.hackerrank.com/challenges/predicting-house-prices/problem
+# this program gets a score of (9.82 / 10)
 import numpy as np
 
 def parseInput():
