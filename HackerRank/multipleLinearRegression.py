@@ -1,4 +1,5 @@
 # My solution for https://www.hackerrank.com/challenges/predicting-house-prices/problem
+import numpy as np
 
 def parseInput():
     # put the number of features in the 'feature' variable
@@ -21,8 +22,25 @@ def parseInput():
     testData = []
     for i in range(testNumber):
         testData.append(list(map(float,input().split())))
-        
+
     return (trainData, trainLabels, testData)
 
+def changeToMatrix(trainData, trainLabels, testData):
+    trainDataMatrix = np.array(trainData)
+    trainLabelsMatrix = np.array(trainLabels)
+    trainDataMatrixTranspose = np.transpose(trainDataMatrix)
+    xtransposexX = np.matmul(trainDataMatrixTranspose, trainDataMatrix)
+    xtransposexXInverse = np.linalg.pinv(xtransposexX)
+    xtransposexXInverseintoX = np.matmul(
+                            xtransposexXInverse, trainDataMatrixTranspose)
+    thetaMatrix = np.matmul(xtransposexXInverseintoX, trainLabelsMatrix)
+    return thetaMatrix
+trainData, trainLabels, testData = parseInput()
 
-parseInput()
+
+thetaMatrix = changeToMatrix(trainData, trainLabels, testData)
+for j in testData:
+    prediction  = 0
+    for i, k  in zip(j, thetaMatrix):
+        prediction += i * k
+    print ("%2.f" % prediction)
